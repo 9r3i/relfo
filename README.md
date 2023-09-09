@@ -13,7 +13,11 @@ release forwarder
 
 
 # Usage
-...
+```php
+new relfo('9r3i/relfo');
+```
 
 
+# Closing
+That's all there is to it. Alhamdulillaah...
 

@@ -1,11 +1,11 @@
 <?php
 /* 9r3i\release-forwarder, https://github.com/9r3i/relfo, started at september 9th 2023 */
 class relfo{
-  const version='1.1.0';
+  const version='1.1.1';
   private $mime=[];
   private $base='';
   public function __construct(string $repo){
-    $ptrn='https://github.com/9r3i/%s/releases/download/';
+    $ptrn='https://github.com/%s/releases/download/';
     $this->base=sprintf($ptrn,$repo);
     return $this->s();
   }
