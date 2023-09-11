@@ -1,12 +1,21 @@
 <?php
-/* 9r3i\release-forwarder, https://github.com/9r3i/relfo, started at september 9th 2023 */
+/**
+ * 9r3i\release-forwarder
+ * ~ github only via vercel
+ * authored by 9r3i
+ * https://github.com/9r3i/relfo
+ * started at september 9th 2023
+ **/
 class relfo{
-  const version='1.1.1';
+  const version='1.2.0';
   private $mime=[];
-  private $base='';
+  private $base=''; // base of assets of releases
+  private $code=''; // code assets in zip and tar.gz
   public function __construct(string $repo){
+    $iptrn='https://github.com/%s/archive/refs/tags/';
     $ptrn='https://github.com/%s/releases/download/';
     $this->base=sprintf($ptrn,$repo);
+    $this->code=sprintf($iptrn,$repo);
     return $this->s();
   }
   /* start */
@@ -20,7 +29,8 @@ class relfo{
       $path=explode('?',$_SERVER['REQUEST_URI'])[0];
       $file=preg_replace('/^\//','',$path);
     }
-    $base=$this->base;
+    $base=preg_match('/^[^\/]+$/',$file)
+      ?$this->code:$this->base;
     $url=$base.$file;
     $data=[];
     $cookie=$_GET['cookie']??'';
