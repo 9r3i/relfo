@@ -9,13 +9,20 @@
 
 
 # relfo
-release forwarder
+release forwarder for github releases
 
 
 # Usage
 ```php
 new relfo('9r3i/relfo');
 ```
+or use sample usage for vercel in ```api/``` directory
+
+
+# Sample
+this is one of sample, click [here](https://relfo.vercel.app/1.2.0/sample.html)
+
+forwarded from release tag ```1.2.0``` with asset file ```sample.html```
 
 
 # Closing
