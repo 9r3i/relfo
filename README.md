@@ -13,6 +13,12 @@ release forwarder for github releases
 
 
 # Usage
+```
+object relfo::__construct(string $repo)
+```
+```$repo``` string repo ```<username>/<repo>```
+
+example:
 ```php
 new relfo('9r3i/relfo');
 ```
