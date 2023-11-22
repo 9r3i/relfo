@@ -11,9 +11,11 @@
 # relfo
 release forwarder for github releases
 
+version 2.0.0 forward all github users release
 
-# Usage
-```
+
+# Usage v1.2.0
+```php
 object relfo::__construct(string $repo)
 ```
 ```$repo``` string repo ```<username>/<repo>```
@@ -25,8 +27,14 @@ new relfo('9r3i/relfo');
 or use sample usage for vercel in ```api/``` directory
 
 
+# Usage v2.0.0
+```php
+new relfo;
+```
+
+
 # Sample
-this is one of sample, click [here](https://relfo.vercel.app/1.2.0/sample.html)
+this is one of sample, click [here](https://relfo.vercel.app/9r3i/relfo/1.2.0/sample.html)
 
 forwarded from release tag ```1.2.0``` with asset file ```sample.html```
 
