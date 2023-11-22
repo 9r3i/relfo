@@ -5,31 +5,39 @@
  * authored by 9r3i
  * https://github.com/9r3i/relfo
  * started at september 9th 2023
+ * continued at november 23rd 2023 - v2.0.0 -- across github users
+ * @usage: new relfo;
  **/
 class relfo{
-  const version='1.2.0';
+  const version='2.0.0';
   private $mime=[];
   private $base=''; // base of assets of releases
   private $code=''; // code assets in zip and tar.gz
-  public function __construct(string $repo){
-    $iptrn='https://github.com/%s/archive/refs/tags/';
-    $ptrn='https://github.com/%s/releases/download/';
-    $this->base=sprintf($ptrn,$repo);
-    $this->code=sprintf($iptrn,$repo);
+  public function __construct(){
+    @set_time_limit(false);
+    @date_default_timezone_set('Asia/Jakarta');
+    $this->h();
     return $this->s();
   }
   /* start */
   private function s(){
-    @set_time_limit(false);
-    @date_default_timezone_set('Asia/Jakarta');
-    $this->h();
     if(isset($_GET['file'])){
-      $file=$_GET['file'];
+      $path=$_GET['file'];
     }else{
-      $path=explode('?',$_SERVER['REQUEST_URI'])[0];
-      $file=preg_replace('/^\//','',$path);
+      $pathname=explode('?',$_SERVER['REQUEST_URI'])[0];
+      $path=preg_replace('/^\//','',$pathname);
     }
-    $base=preg_match('/^[^\/]+$/',$file)
+    $ptrn='/^([^\/]+\/[^\/]+)\/(.*)$/';
+    if(!preg_match($ptrn,$path,$akur)){
+      return $this->o('Error: Invalid request.');
+    }
+    $repo=$akur[1];
+    $file=$akur[2];
+    $iptrn='https://github.com/%s/archive/refs/tags/';
+    $ptrn='https://github.com/%s/releases/download/';
+    $this->base=sprintf($ptrn,$repo);
+    $this->code=sprintf($iptrn,$repo);
+    $base=preg_match('/\.(zip|tar\.gz)$/',$file)
       ?$this->code:$this->base;
     $url=$base.$file;
     $data=[];
