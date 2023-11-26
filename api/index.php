@@ -9,10 +9,11 @@ new relfo;
  * https://github.com/9r3i/relfo
  * started at september 9th 2023
  * continued at november 23rd 2023 - v2.0.0 -- across github users
+ * continued at november 27th 2023 - v2.1.0 -- read html
  * @usage: new relfo;
  **/
 class relfo{
-  const version='2.0.0';
+  const version='2.1.0';
   private $mime=[];
   private $base=''; // base of assets of releases
   private $code=''; // code assets in zip and tar.gz
@@ -40,8 +41,9 @@ class relfo{
     $ptrn='https://github.com/%s/releases/download/';
     $this->base=sprintf($ptrn,$repo);
     $this->code=sprintf($iptrn,$repo);
-    $base=preg_match('/\.(zip|tar\.gz)$/',$file)
+    $base=preg_match('/^[^\/]+\.(zip|tar\.gz)$/',$file)
       ?$this->code:$this->base;
+    $file.=preg_match('/^[^\/]+\/$/',$file)?'index.html':'';
     $url=$base.$file;
     $data=[];
     $cookie=$_GET['cookie']??'';
