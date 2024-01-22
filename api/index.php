@@ -10,10 +10,11 @@ new relfo;
  * started at september 9th 2023
  * continued at november 23rd 2023 - v2.0.0 -- across github users
  * continued at november 27th 2023 - v2.1.0 -- read html
+ * continued at november 27th 2023 - v2.2.0 -- read location by @hcib
  * @usage: new relfo;
  **/
 class relfo{
-  const version='2.1.0';
+  const version='2.2.0';
   private $mime=[];
   private $base=''; // base of assets of releases
   private $code=''; // code assets in zip and tar.gz
@@ -54,7 +55,7 @@ class relfo{
       return $this->o('Error: Invalid URL.');
     }
     $c=$this->c($data,$cookie,$method,$header,$ua);
-    $o=@fopen($url,'rb',false,$c);
+    $o=$this->open($url,$c);
     if(!is_resource($o)){
       return $this->o('Error: Failed to open file.');
     }
@@ -74,6 +75,25 @@ class relfo{
     @fclose($o);
     /* return as true */
     return true;
+  }
+  /* open */
+  private function open($url,$context){
+    $o=@fopen($url,'rb',false,$context);
+    if(!is_resource($o)){return false;}
+    $h=@stream_get_meta_data($o);
+    if(!is_array($h)||!isset($h['wrapper_data'])){
+      return $o;
+    }
+    $r=false;
+    foreach($h['wrapper_data'] as $v){
+      if(preg_match('/Location:\s*([^\n]+)/i',$v,$a)){
+        $r=$a[1];break;
+      }
+    }
+    if($r){
+      $o=$this->open($r,$context);
+    }
+    return $o;
   }
   /* get mime type from file path
    *   $f = string of file path
@@ -184,5 +204,4 @@ class relfo{
     }
   }
 }
-
 
